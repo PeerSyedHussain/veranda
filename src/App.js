@@ -186,12 +186,12 @@ class App extends Component {
             {
               id : 'all',
               label : 'All',
-              value : false
+              value : true
             },
             {
               id : 'ibps_exams',
               label : 'IBPS Exams',
-              value : true
+              value : false
             },
             {
               id : 'finance_markets',
@@ -243,7 +243,7 @@ class App extends Component {
             {
               id : 'intermediate',
               label : 'Intermediate',
-              value : true
+              value : false
             },
             {
               id : 'expert',
@@ -255,7 +255,7 @@ class App extends Component {
             {
               id : 'free',
               label : 'Free',
-              value : true
+              value : false
             },
             {
               id : 'paid',
@@ -267,7 +267,7 @@ class App extends Component {
             {
               id : 'tamil',
               label : 'Tamil',
-              value : true
+              value : false
             },
             {
               id : 'english',
@@ -310,17 +310,27 @@ class App extends Component {
       for(let i=0;i<category_list.length ;i++){
         if(category_list[i].value){
           let checked_label = category_list[i].label
+
+          if(checked_label === 'All'){
+            for(let j=0;j<course_list.length;j++){
+              final_list.push(course_list[j])
+            }
+          }
+          else{
             for(let j=0;j<course_list.length;j++){
                 if(checked_label === course_list[j].dataCategory){
                     final_list.push(course_list[j])
                 }
             }
+          }
         }
       }
       console.log('final_list',final_list)
 
       this.setState({
         FinalCourseList : final_list
+      },() => {
+
       })
     }
 
@@ -330,26 +340,32 @@ class App extends Component {
       let selected_category = e.target.nextSibling.textContent
 
       let value = e.target.checked
-      if(selected_category !== 'All'){
-        this.setState(prevState => ({
-            category_list : prevState.category_list.map(
-              el => el.label === selected_category ? {
-                ...el,
-                value : value
-              }
-              : 
-              el
-            ) 
-        }),() => {
-          console.log(this.state.category_list)
-          this.PageLoadList()
-        })
+
+      this.setState(prevState => ({
+          category_list : prevState.category_list.map(
+            el => el.label === selected_category ? {
+              ...el,
+              value : value
+            }
+            : 
+            el
+          ) 
+      }),() => {
+        console.log(this.state.category_list)
+        this.PageLoadList()
+      })
+    }
+
+    checkCategoryFilter(){
+      let category_list = this.state.category_list
+
+      let category_true_array = []
+      for(let i=0;i<category_list.length;i++){
+        if(category_list[i].value){
+            category_true_array.push(category_list[i])
+        }
       }
-      else{
-        this.setState({
-          FinalCourseList : this.state.courses
-        })
-      }
+      return category_true_array;
     }
 
     pageAfterClickLevelFilter(){
@@ -358,6 +374,9 @@ class App extends Component {
       let course_list = this.state.courses
 
       let final_list = []
+      
+      let filer_by_category = this.checkCategoryFilter()
+      console.log('filer_by_category',filer_by_category)
       for(let i=0;i<level_list.length ;i++){
         if(level_list[i].value){
           let checked_label = level_list[i].label
