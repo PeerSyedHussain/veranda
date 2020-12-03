@@ -58,7 +58,7 @@ class App extends Component {
               dataCategory : "Finance Markets",
               dataLevel : "Expert",
               dataPrice : "Free",
-              dataLanguage : "Tamil",
+              dataLanguage : "Malayalam",
               dataSort : "Popular",
               className : "course-box",
               firstChildClass : "course-img",
@@ -76,7 +76,7 @@ class App extends Component {
               dataCategory : "Economics",
               dataLevel : "Expert",
               dataPrice : "Paid",
-              dataLanguage : "Tamil",
+              dataLanguage : "English",
               dataSort : "Popular",
               className : "course-box",
               firstChildClass : "course-img",
@@ -94,7 +94,7 @@ class App extends Component {
               dataCategory : "Statistics",
               dataLevel : "Expert",
               dataPrice : "Paid",
-              dataLanguage : "Tamil",
+              dataLanguage : "Telugu",
               dataSort : "Popular",
               className : "course-box",
               firstChildClass : "course-img",
@@ -112,7 +112,7 @@ class App extends Component {
               dataCategory : "Data Analysis",
               dataLevel : "Expert",
               dataPrice : "Paid",
-              dataLanguage : "Tamil",
+              dataLanguage : "Hindi",
               dataSort : "Popular",
               className : "course-box",
               firstChildClass : "course-img",
@@ -234,7 +234,62 @@ class App extends Component {
               value : false
             },
           ],
-          
+          level_list : [
+            {
+              id : 'beginner',
+              label : 'Beginner',
+              value : false
+            },
+            {
+              id : 'intermediate',
+              label : 'Intermediate',
+              value : true
+            },
+            {
+              id : 'expert',
+              label : 'Expert',
+              value : false
+            },
+          ],
+          price_list : [
+            {
+              id : 'free',
+              label : 'Free',
+              value : true
+            },
+            {
+              id : 'paid',
+              label : 'Paid',
+              value : false
+            },
+          ],
+          language_list : [
+            {
+              id : 'tamil',
+              label : 'Tamil',
+              value : true
+            },
+            {
+              id : 'english',
+              label : 'English',
+              value : false
+            },
+            {
+              id : 'malayalam',
+              label : 'Malayalam',
+              value : false
+            },
+            {
+              id : 'hindi',
+              label : 'Hindi',
+              value : false
+            },
+            {
+              id : 'telugu',
+              label : 'Telugu',
+              value : false
+            },
+          ],
         }
     }
 
@@ -297,8 +352,145 @@ class App extends Component {
       }
     }
 
+    pageAfterClickLevelFilter(){
+      let level_list = this.state.level_list
+
+      let course_list = this.state.courses
+
+      let final_list = []
+      for(let i=0;i<level_list.length ;i++){
+        if(level_list[i].value){
+          let checked_label = level_list[i].label
+            for(let j=0;j<course_list.length;j++){
+                if(checked_label === course_list[j].dataLevel){
+                    final_list.push(course_list[j])
+                }
+            }
+        }
+      }
+      console.log('final_list',final_list)
+
+      this.setState({
+        FinalCourseList : final_list
+      })
+    }
+
+    pageAfterClickPriceFilter(){
+      let price_list = this.state.price_list
+
+      let course_list = this.state.courses
+
+      let final_list = []
+      for(let i=0;i<price_list.length ;i++){
+        if(price_list[i].value){
+          let checked_label = price_list[i].label
+            for(let j=0;j<course_list.length;j++){
+                if(checked_label === course_list[j].dataPrice){
+                    final_list.push(course_list[j])
+                }
+            }
+        }
+      }
+      console.log('final_list',final_list)
+
+      this.setState({
+        FinalCourseList : final_list
+      })
+    }
+
+    pageAfterClickLanguageFilter(){
+      let language_list = this.state.language_list
+
+      let course_list = this.state.courses
+
+      let final_list = []
+      for(let i=0;i<language_list.length ;i++){
+        if(language_list[i].value){
+          let checked_label = language_list[i].label
+            for(let j=0;j<course_list.length;j++){
+                if(checked_label === course_list[j].dataLanguage){
+                    final_list.push(course_list[j])
+                }
+            }
+        }
+      }
+      console.log('final_list',final_list)
+
+      this.setState({
+        FinalCourseList : final_list
+      })
+    }
+
+    levelFilter = (e) => {
+      console.log(e.target.nextSibling.textContent,e.target.checked)
+
+      let selected_category = e.target.nextSibling.textContent
+
+      let value = e.target.checked
+      
+      this.setState(prevState => ({
+          level_list : prevState.level_list.map(
+            el => el.label === selected_category ? {
+              ...el,
+              value : value
+            }
+            : 
+            el
+          ) 
+      }),() => {
+        console.log(this.state.level_list)
+        this.pageAfterClickLevelFilter()
+      })
+    }
+
+    priceFilter = (e) => {
+      console.log(e.target.nextSibling.textContent,e.target.checked)
+
+      let selected_category = e.target.nextSibling.textContent
+
+      let value = e.target.checked
+      
+      this.setState(prevState => ({
+          price_list : prevState.price_list.map(
+            el => el.label === selected_category ? {
+              ...el,
+              value : value
+            }
+            : 
+            el
+          ) 
+      }),() => {
+        console.log(this.state.price_list)
+        this.pageAfterClickPriceFilter()
+      })
+    }
+
+    languageFilter = (e) => {
+      console.log(e.target.nextSibling.textContent,e.target.checked)
+
+      let selected_category = e.target.nextSibling.textContent
+
+      let value = e.target.checked
+      
+      this.setState(prevState => ({
+          language_list : prevState.language_list.map(
+            el => el.label === selected_category ? {
+              ...el,
+              value : value
+            }
+            : 
+            el
+          ) 
+      }),() => {
+        console.log(this.state.language_list)
+        this.pageAfterClickLanguageFilter()
+      })
+    }
+
+
+
     render() {
-        const { FinalCourseList,category_list } = this.state;
+        const { FinalCourseList,category_list,level_list,price_list,language_list } = this.state;
         return (
           <>
             <section className='row my-4'>
@@ -337,21 +529,23 @@ class App extends Component {
                           </span>
                         </h5>
                         <ul className='p-0'>
-                            <li>
-                                <Form.Group controlId="beginner">
-                                  <Form.Check id='beginner' type="checkbox" label="Beginner" />
-                                </Form.Group>
-                            </li>
-                            <li>
-                                <Form.Group controlId="intermediate">
-                                  <Form.Check id='intermediate' type="checkbox" label="Intermediate" />
-                                </Form.Group>
-                            </li>
-                            <li>
-                                <Form.Group controlId="expert">
-                                  <Form.Check id='expert' type="checkbox" label="Expert" />
-                                </Form.Group>
-                            </li>
+                          {
+                              level_list.map((item,key) => {
+                                  return (
+                                      <>
+                                          <li id={key}>
+                                              <Form.Group controlId={item.id}>
+                                                <Form.Check id={item.id} type='checkbox' label={item.label}
+                                                    checked={(item.value === true) ? true : false }
+                                                   onChange={this.levelFilter}
+                                                />
+                                              </Form.Group>
+                                          </li>
+                                      </>
+                                  );
+                              })
+                            }
+                           
                         </ul>
                     </div>
                     <div>
@@ -362,16 +556,22 @@ class App extends Component {
                           </span>
                         </h5>
                         <ul className='p-0'>
-                            <li>
-                                <Form.Group controlId="free">
-                                  <Form.Check id='free' type="checkbox" label="Free" />
-                                </Form.Group>
-                            </li>
-                            <li>
-                                <Form.Group controlId="paid">
-                                  <Form.Check id='paid' type="checkbox" label="Paid" />
-                                </Form.Group>
-                            </li>
+                            {
+                              price_list.map((item,key) => {
+                                  return (
+                                      <>
+                                          <li id={key}>
+                                              <Form.Group controlId={item.id}>
+                                                <Form.Check id={item.id} type='checkbox' label={item.label}
+                                                    checked={(item.value === true) ? true : false }
+                                                   onChange={this.priceFilter}
+                                                />
+                                              </Form.Group>
+                                          </li>
+                                      </>
+                                  );
+                              })
+                            }
                         </ul>
                     </div>
                     <div>
@@ -382,31 +582,22 @@ class App extends Component {
                           </span>
                         </h5>
                         <ul className='p-0'>
-                            <li>
-                                <Form.Group controlId="english">
-                                  <Form.Check id='english' type="checkbox" label="English" />
-                                </Form.Group>
-                            </li>
-                            <li>
-                                <Form.Group controlId="tamil">
-                                  <Form.Check id='tamil' type="checkbox" label="Tamil" />
-                                </Form.Group>
-                            </li>
-                            <li>
-                                <Form.Group controlId="malayalam">
-                                  <Form.Check id='malayalam' type="checkbox" label="Malayalam" />
-                                </Form.Group>
-                            </li>
-                            <li>
-                                <Form.Group controlId="telugu">
-                                  <Form.Check id='telugu' type="checkbox" label="Telugu" />
-                                </Form.Group>
-                            </li>
-                            <li>
-                                <Form.Group controlId="hindi">
-                                  <Form.Check id='hindi' type="checkbox" label="Hindi" />
-                                </Form.Group>
-                            </li>
+                            {
+                              language_list.map((item,key) => {
+                                  return (
+                                      <>
+                                          <li id={key}>
+                                              <Form.Group controlId={item.id}>
+                                                <Form.Check id={item.id} type='checkbox' label={item.label}
+                                                    checked={(item.value === true) ? true : false }
+                                                   onChange={this.languageFilter}
+                                                />
+                                              </Form.Group>
+                                          </li>
+                                      </>
+                                  );
+                              })
+                            }
                         </ul>
                     </div>
                 </div>
