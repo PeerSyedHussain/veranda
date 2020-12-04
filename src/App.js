@@ -290,49 +290,66 @@ class App extends Component {
               value : false
             },
           ],
+          filtered_list : []
         }
     }
 
     componentDidMount(){
-        this.setState({
-          FinalCourseList : this.state.courses
-        })
+        // this.setState({
+        //   FinalCourseList : this.state.courses
+        // })
 
-        this.PageLoadList()
+        // this.PageLoadList()
+        let checkTrueCategory = this.checkTrueCategory()
+        // console.log('checkTrueCategory',checkTrueCategory)
+
+        this.state.filtered_list.push(checkTrueCategory[0])
+        // console.log(this.state.filtered_list,checkTrueCategory[0])
+
+        this.showCourses()
     }
 
-    PageLoadList(){
-      let category_list = this.state.category_list
+    checkTrueCategory(){
+        let category_list = this.state.category_list
+        
+        let category_true_list = []
 
-      let course_list = this.state.courses
-
-      let final_list = []
-      for(let i=0;i<category_list.length ;i++){
-        if(category_list[i].value){
-          let checked_label = category_list[i].label
-
-          if(checked_label === 'All'){
-            for(let j=0;j<course_list.length;j++){
-              final_list.push(course_list[j])
+        for(let i = 0; i<category_list.length; i++){
+            if(category_list[i].value){
+                category_true_list.push(category_list[i])
             }
-          }
-          else{
-            for(let j=0;j<course_list.length;j++){
-                if(checked_label === course_list[j].dataCategory){
-                    final_list.push(course_list[j])
-                }
-            }
-          }
         }
-      }
-      console.log('final_list',final_list)
 
-      this.setState({
-        FinalCourseList : final_list
-      },() => {
-
-      })
+        return category_true_list;
     }
+
+    showCourses(){
+
+        let filtered_item = this.state.filtered_list
+
+        let overall_course_list = this.state.courses
+
+        let category_wise_course = []
+
+        for (let index = 0; index < filtered_item.length; index++) {
+            for(let i=0;i<overall_course_list.length;i++){
+                if(filtered_item[index].label === 'All'){
+                    category_wise_course.push(overall_course_list[i])
+                }
+                else{
+                  if(filtered_item[index].label === overall_course_list[i].dataCategory){
+                    category_wise_course.push(overall_course_list[i])
+                  }
+                }   
+            }
+        }
+
+        console.log('category_wise_course',category_wise_course)
+        this.setState({
+            FinalCourseList : category_wise_course
+        })
+    }
+
 
     categoryFilter = (e) => {
       console.log(e.target.nextSibling.textContent,e.target.checked)
@@ -343,7 +360,7 @@ class App extends Component {
 
       this.setState(prevState => ({
           category_list : prevState.category_list.map(
-            el => el.label === selected_category ? {
+            (el,key) =>  el.label === selected_category ? {
               ...el,
               value : value
             }
@@ -352,159 +369,258 @@ class App extends Component {
           ) 
       }),() => {
         console.log(this.state.category_list)
-        this.PageLoadList()
+          if(selected_category !== 'All'){
+              this.setState(prevState => ({
+                category_list : prevState.category_list.map(
+                  (el,key) =>  (el.label === 'All' && el.value === true) ? {
+                    ...el,
+                    value : false
+                  }
+                  : 
+                  el
+                ) 
+            }),() => {
+              let checkTrueCategory = this.checkTrueCategory()
+
+              this.setFilterList(checkTrueCategory)
+
+              this.showCourses()
+            })
+          }
+          else{
+            this.setState(prevState => ({
+                category_list : prevState.category_list.map(
+                  (el,key) => (el.label !== 'All') ? {
+                    ...el,
+                    value : false
+                  }
+                  : 
+                  el
+                ) 
+            }),() => {
+              let checkTrueCategory = this.checkTrueCategory()
+              
+              this.setFilterList(checkTrueCategory)
+              
+              this.showCourses()
+            })
+          }
+          
       })
-    }
+    } 
 
-    checkCategoryFilter(){
-      let category_list = this.state.category_list
-
-      let category_true_array = []
-      for(let i=0;i<category_list.length;i++){
-        if(category_list[i].value){
-            category_true_array.push(category_list[i])
-        }
-      }
-      return category_true_array;
-    }
-
-    pageAfterClickLevelFilter(){
-      let level_list = this.state.level_list
-
-      let course_list = this.state.courses
-
-      let final_list = []
-      
-      let filer_by_category = this.checkCategoryFilter()
-      console.log('filer_by_category',filer_by_category)
-      for(let i=0;i<level_list.length ;i++){
-        if(level_list[i].value){
-          let checked_label = level_list[i].label
-            for(let j=0;j<course_list.length;j++){
-                if(checked_label === course_list[j].dataLevel){
-                    final_list.push(course_list[j])
-                }
-            }
-        }
-      }
-      console.log('final_list',final_list)
+    setFilterList(checkTrueCategory){
+      this.state.filtered_list.pop(0)
 
       this.setState({
-        FinalCourseList : final_list
+        filtered_list : []
       })
+      checkTrueCategory.map((item,key) => this.state.filtered_list.push(item))
     }
+    // PageLoadList(){
+    //   let category_list = this.state.category_list
 
-    pageAfterClickPriceFilter(){
-      let price_list = this.state.price_list
+    //   let course_list = this.state.courses
 
-      let course_list = this.state.courses
+    //   let final_list = []
+    //   for(let i=0;i<category_list.length ;i++){
+    //     if(category_list[i].value){
+    //       let checked_label = category_list[i].label
 
-      let final_list = []
-      for(let i=0;i<price_list.length ;i++){
-        if(price_list[i].value){
-          let checked_label = price_list[i].label
-            for(let j=0;j<course_list.length;j++){
-                if(checked_label === course_list[j].dataPrice){
-                    final_list.push(course_list[j])
-                }
-            }
-        }
-      }
-      console.log('final_list',final_list)
+    //       if(checked_label === 'All'){
+    //         for(let j=0;j<course_list.length;j++){
+    //           final_list.push(course_list[j])
+    //         }
+    //       }
+    //       else{
+    //         for(let j=0;j<course_list.length;j++){
+    //             if(checked_label === course_list[j].dataCategory){
+    //                 final_list.push(course_list[j])
+    //             }
+    //         }
+    //       }
+    //     }
+    //   }
+    //   console.log('final_list',final_list)
 
-      this.setState({
-        FinalCourseList : final_list
-      })
-    }
+    //   this.setState({
+    //     FinalCourseList : final_list
+    //   },() => {
 
-    pageAfterClickLanguageFilter(){
-      let language_list = this.state.language_list
+    //   })
+    // }
 
-      let course_list = this.state.courses
+    // categoryFilter = (e) => {
+    //   console.log(e.target.nextSibling.textContent,e.target.checked)
 
-      let final_list = []
-      for(let i=0;i<language_list.length ;i++){
-        if(language_list[i].value){
-          let checked_label = language_list[i].label
-            for(let j=0;j<course_list.length;j++){
-                if(checked_label === course_list[j].dataLanguage){
-                    final_list.push(course_list[j])
-                }
-            }
-        }
-      }
-      console.log('final_list',final_list)
+    //   let selected_category = e.target.nextSibling.textContent
 
-      this.setState({
-        FinalCourseList : final_list
-      })
-    }
+    //   let value = e.target.checked
 
-    levelFilter = (e) => {
-      console.log(e.target.nextSibling.textContent,e.target.checked)
+    //   this.setState(prevState => ({
+    //       category_list : prevState.category_list.map(
+    //         el => el.label === selected_category ? {
+    //           ...el,
+    //           value : value
+    //         }
+    //         : 
+    //         el
+    //       ) 
+    //   }),() => {
+    //     console.log(this.state.category_list)
+    //     this.PageLoadList()
+    //   })
+    // }
 
-      let selected_category = e.target.nextSibling.textContent
+    // checkCategoryFilter(){
+    //   let category_list = this.state.category_list
 
-      let value = e.target.checked
+    //   let category_true_array = []
+    //   for(let i=0;i<category_list.length;i++){
+    //     if(category_list[i].value){
+    //         category_true_array.push(category_list[i])
+    //     }
+    //   }
+    //   return category_true_array;
+    // }
+
+    // pageAfterClickLevelFilter(){
+    //   let level_list = this.state.level_list
+
+    //   let course_list = this.state.courses
+
+    //   let final_list = []
       
-      this.setState(prevState => ({
-          level_list : prevState.level_list.map(
-            el => el.label === selected_category ? {
-              ...el,
-              value : value
-            }
-            : 
-            el
-          ) 
-      }),() => {
-        console.log(this.state.level_list)
-        this.pageAfterClickLevelFilter()
-      })
-    }
+    //   let filer_by_category = this.checkCategoryFilter()
+    //   console.log('filer_by_category',filer_by_category)
+    //   for(let i=0;i<level_list.length ;i++){
+    //     if(level_list[i].value){
+    //       let checked_label = level_list[i].label
+    //         for(let j=0;j<course_list.length;j++){
+    //             if(checked_label === course_list[j].dataLevel){
+    //                 final_list.push(course_list[j])
+    //             }
+    //         }
+    //     }
+    //   }
+    //   console.log('final_list',final_list)
 
-    priceFilter = (e) => {
-      console.log(e.target.nextSibling.textContent,e.target.checked)
+    //   this.setState({
+    //     FinalCourseList : final_list
+    //   })
+    // }
 
-      let selected_category = e.target.nextSibling.textContent
+    // pageAfterClickPriceFilter(){
+    //   let price_list = this.state.price_list
 
-      let value = e.target.checked
+    //   let course_list = this.state.courses
+
+    //   let final_list = []
+    //   for(let i=0;i<price_list.length ;i++){
+    //     if(price_list[i].value){
+    //       let checked_label = price_list[i].label
+    //         for(let j=0;j<course_list.length;j++){
+    //             if(checked_label === course_list[j].dataPrice){
+    //                 final_list.push(course_list[j])
+    //             }
+    //         }
+    //     }
+    //   }
+    //   console.log('final_list',final_list)
+
+    //   this.setState({
+    //     FinalCourseList : final_list
+    //   })
+    // }
+
+    // pageAfterClickLanguageFilter(){
+    //   let language_list = this.state.language_list
+
+    //   let course_list = this.state.courses
+
+    //   let final_list = []
+    //   for(let i=0;i<language_list.length ;i++){
+    //     if(language_list[i].value){
+    //       let checked_label = language_list[i].label
+    //         for(let j=0;j<course_list.length;j++){
+    //             if(checked_label === course_list[j].dataLanguage){
+    //                 final_list.push(course_list[j])
+    //             }
+    //         }
+    //     }
+    //   }
+    //   console.log('final_list',final_list)
+
+    //   this.setState({
+    //     FinalCourseList : final_list
+    //   })
+    // }
+
+    // levelFilter = (e) => {
+    //   console.log(e.target.nextSibling.textContent,e.target.checked)
+
+    //   let selected_category = e.target.nextSibling.textContent
+
+    //   let value = e.target.checked
       
-      this.setState(prevState => ({
-          price_list : prevState.price_list.map(
-            el => el.label === selected_category ? {
-              ...el,
-              value : value
-            }
-            : 
-            el
-          ) 
-      }),() => {
-        console.log(this.state.price_list)
-        this.pageAfterClickPriceFilter()
-      })
-    }
+    //   this.setState(prevState => ({
+    //       level_list : prevState.level_list.map(
+    //         el => el.label === selected_category ? {
+    //           ...el,
+    //           value : value
+    //         }
+    //         : 
+    //         el
+    //       ) 
+    //   }),() => {
+    //     console.log(this.state.level_list)
+    //     this.pageAfterClickLevelFilter()
+    //   })
+    // }
 
-    languageFilter = (e) => {
-      console.log(e.target.nextSibling.textContent,e.target.checked)
+    // priceFilter = (e) => {
+    //   console.log(e.target.nextSibling.textContent,e.target.checked)
 
-      let selected_category = e.target.nextSibling.textContent
+    //   let selected_category = e.target.nextSibling.textContent
 
-      let value = e.target.checked
+    //   let value = e.target.checked
       
-      this.setState(prevState => ({
-          language_list : prevState.language_list.map(
-            el => el.label === selected_category ? {
-              ...el,
-              value : value
-            }
-            : 
-            el
-          ) 
-      }),() => {
-        console.log(this.state.language_list)
-        this.pageAfterClickLanguageFilter()
-      })
-    }
+    //   this.setState(prevState => ({
+    //       price_list : prevState.price_list.map(
+    //         el => el.label === selected_category ? {
+    //           ...el,
+    //           value : value
+    //         }
+    //         : 
+    //         el
+    //       ) 
+    //   }),() => {
+    //     console.log(this.state.price_list)
+    //     this.pageAfterClickPriceFilter()
+    //   })
+    // }
+
+    // languageFilter = (e) => {
+    //   console.log(e.target.nextSibling.textContent,e.target.checked)
+
+    //   let selected_category = e.target.nextSibling.textContent
+
+    //   let value = e.target.checked
+      
+    //   this.setState(prevState => ({
+    //       language_list : prevState.language_list.map(
+    //         el => el.label === selected_category ? {
+    //           ...el,
+    //           value : value
+    //         }
+    //         : 
+    //         el
+    //       ) 
+    //   }),() => {
+    //     console.log(this.state.language_list)
+    //     this.pageAfterClickLanguageFilter()
+    //   })
+    // }
 
 
 
