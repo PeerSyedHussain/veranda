@@ -380,9 +380,9 @@ class App extends Component {
             }),() => {
               console.log(this.state.category_list)
 
-              let checkTrueCategory = this.checkTrueCategory()
+              // let checkTrueCategory = this.checkTrueCategory()
 
-              this.setFilterList(checkTrueCategory)
+              this.setFilterList(this.state.category_list)
 
               this.showCourses()
             })
@@ -400,11 +400,11 @@ class App extends Component {
             }),() => {
               console.log(this.state.category_list)
 
-              let checkTrueCategory = this.checkTrueCategory()
+              // let checkTrueCategory = this.checkTrueCategory()
               
-              this.state.filtered_list.push(checkTrueCategory[0])
+              // this.state.filtered_list.push(checkTrueCategory[0])
 
-              this.setFilterList(checkTrueCategory)
+              this.setFilterList(this.state.category_list)
               
               this.showCourses()
             })
@@ -412,10 +412,60 @@ class App extends Component {
       })
     } 
 
-    setFilterList(TrueValues){
-      console.log(TrueValues)
+    setFilterList(Data){
+      console.log('Data',Data)
 
-      TrueValues.map((item,key) => this.state.filtered_list.push(item))
+      let filtered_data = this.state.filtered_list
+
+      // Data.map((item,key) => 
+      //   (item.value) ? 
+      //       filtered_data.map((subitem,key) =>  
+      //           (item.label) === (subitem.label) ? 
+      //               '' : filtered_data.push(item)
+      //       ) 
+      //       : 
+      //       filtered_data.map((subitem,key) =>  
+      //           (item.label) === (subitem.label) ? 
+      //           filtered_data.pop(item) : ''
+      //       ) 
+      // )
+
+      for(let i=0;i<Data.length;i++){
+          if(Data[i].value){
+             if(filtered_data.length > 0){
+                for(let j=0;j<filtered_data.length;j++){
+                    if(Data[i].label === filtered_data[j].label){
+                        
+                    }
+                    else{
+                        filtered_data.push(Data[i])
+                    }
+                }
+             }
+             else{
+                filtered_data.push(Data[i])
+             }
+          }
+          else{
+              if(filtered_data.length > 0){
+                  for(let j=0;j<filtered_data.length;j++){
+                      if(Data[i].label === filtered_data[j].label){
+                          filtered_data.pop(Data[i])
+                      }
+                      else{
+                          
+                      }
+                  }
+              }
+          }
+      }
+
+      this.setState({
+        filtered_list : filtered_data
+      },()=> {
+        console.log('filtered_data',this.state.filtered_list)
+      })
+      // TrueValues.map((item,key) => this.state.filtered_list.push(item))
 
       // console.log(JSON.stringify(this.removeDuplicate(this.state.filtered_list, item => item.label)))
       // console.log('this.state.filtered_list',this.state.filtered_list)
