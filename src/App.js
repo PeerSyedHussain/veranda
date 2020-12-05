@@ -366,7 +366,6 @@ class App extends Component {
             el
           ) 
       }),() => {
-        console.log(this.state.category_list)
           if(selected_category !== 'All'){
               this.setState(prevState => ({
                 category_list : prevState.category_list.map(
@@ -379,6 +378,8 @@ class App extends Component {
                 ) ,
                 filtered_list : []
             }),() => {
+              console.log(this.state.category_list)
+
               let checkTrueCategory = this.checkTrueCategory()
 
               this.setFilterList(checkTrueCategory)
@@ -397,6 +398,8 @@ class App extends Component {
                   el
                 ) ,
             }),() => {
+              console.log(this.state.category_list)
+
               let checkTrueCategory = this.checkTrueCategory()
               
               this.state.filtered_list.push(checkTrueCategory[0])
@@ -406,7 +409,6 @@ class App extends Component {
               this.showCourses()
             })
           }
-          
       })
     } 
 
@@ -415,7 +417,7 @@ class App extends Component {
 
       TrueValues.map((item,key) => this.state.filtered_list.push(item))
 
-      console.log(JSON.stringify(this.removeDuplicate(this.state.filtered_list, item => item.label)))
+      // console.log(JSON.stringify(this.removeDuplicate(this.state.filtered_list, item => item.label)))
       // console.log('this.state.filtered_list',this.state.filtered_list)
     }
 
