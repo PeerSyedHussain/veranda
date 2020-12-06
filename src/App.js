@@ -290,7 +290,10 @@ class App extends Component {
               value : false
             },
           ],
-          filtered_list : []
+          filtered_list : [],
+          checkTrueCategory : [],
+          checkTrueLevel : [],
+          checkTruePrice : []
         }
     }
 
@@ -302,52 +305,16 @@ class App extends Component {
         // this.PageLoadList()
         let checkTrueCategory = this.checkTrueCategory()
         // console.log('checkTrueCategory',checkTrueCategory)
-
-        this.state.filtered_list.push(checkTrueCategory[0])
+        this.setState({
+            checkTrueCategory : checkTrueCategory
+        },()=> {
+            this.combiningFilter()
+        })
+        // this.state.filtered_list.push(checkTrueCategory[0])
         // console.log(this.state.filtered_list,checkTrueCategory[0])
 
         this.showCourses()
     }
-
-    checkTrueCategory(){
-        let category_list = this.state.category_list
-        
-        let category_true_list = []
-
-        category_list.map((item,key) => (item.value) ? category_true_list.push(item) : '')
-      
-        return category_true_list;
-    }
-
-    showCourses(){
-
-        let filtered_item = this.state.filtered_list
-
-        let overall_course_list = this.state.courses
-
-        let category_wise_course = []
-
-        for (let index = 0; index < filtered_item.length; index++) {
-            for(let i=0;i<overall_course_list.length;i++){
-                if(filtered_item[index].label === 'All'){
-                    category_wise_course.push(overall_course_list[i])
-                }
-                else{
-                  if(filtered_item[index].label === overall_course_list[i].dataCategory){
-                    category_wise_course.push(overall_course_list[i])
-                  }
-                  else if(filtered_item[index].label === overall_course_list[i].dataLevel){
-                    category_wise_course.push(overall_course_list[i])
-                  }
-                }   
-            }
-        }
-        // console.log('category_wise_course',category_wise_course)
-        this.setState({
-            FinalCourseList : category_wise_course
-        })
-    }
-
 
     categoryFilter = (e) => {
       console.log(e.target.nextSibling.textContent,e.target.checked)
@@ -380,11 +347,19 @@ class App extends Component {
             }),() => {
               console.log(this.state.category_list)
 
-              // let checkTrueCategory = this.checkTrueCategory()
+              let checkTrueCategory = this.checkTrueCategory()
 
-              this.setFilterList(this.state.category_list)
+              console.log('checkTrueCategory',checkTrueCategory)
 
-              this.showCourses()
+              this.setState({
+                  checkTrueCategory : checkTrueCategory
+              },() => {
+                  this.combiningFilter()
+              })
+
+              // this.setFilterList(this.state.category_list)
+
+              // this.showCourses()
             })
           }
           else{
@@ -400,17 +375,35 @@ class App extends Component {
             }),() => {
               console.log(this.state.category_list)
 
-              // let checkTrueCategory = this.checkTrueCategory()
+              let checkTrueCategory = this.checkTrueCategory()
               
+              console.log('checkTrueCategory',checkTrueCategory)
+
+              this.setState({
+                checkTrueCategory : checkTrueCategory
+              },() => {
+                  this.combiningFilter()
+              })
+
               // this.state.filtered_list.push(checkTrueCategory[0])
 
-              this.setFilterList(this.state.category_list)
+              // this.setFilterList(this.state.category_list)
               
-              this.showCourses()
+              // this.showCourses()
             })
           }
       })
     } 
+
+    checkTrueCategory(){
+        let category_list = this.state.category_list
+        
+        let category_true_list = []
+
+        category_list.map((item,key) => (item.value) ? category_true_list.push(item) : '')
+      
+        return category_true_list;
+    }
 
     setFilterList(Data){
       console.log('Data',Data)
@@ -471,22 +464,6 @@ class App extends Component {
       // console.log('this.state.filtered_list',this.state.filtered_list)
     }
 
-    removeDuplicate(data,key){
-        return [
-            ...new Map(
-                data.map(x => [
-                    key(x),x
-                ]).values()
-            )
-        ]
-    }
-
-  
-
-
-
-
-
     levelFilter = (e) => {
       console.log(e.target.nextSibling.textContent,e.target.checked)
 
@@ -506,10 +483,18 @@ class App extends Component {
       }),() => {
         // console.log(this.state.level_list)
         let checkTrueLevel = this.checkTrueLevel()
-        // console.log(checkTrueLevel)
-        this.setFilterList(checkTrueLevel)
+        
+        console.log('checkTrueLevel',checkTrueLevel)
 
-        this.showCourses()
+        this.setState({
+            checkTrueLevel : checkTrueLevel
+        },()=>{
+            this.combiningFilter()
+        })
+
+        // this.setFilterList(checkTrueLevel)
+
+        // this.showCourses()
       })
     }
 
@@ -525,6 +510,102 @@ class App extends Component {
     }
 
     
+
+    priceFilter = (e) => {
+      console.log(e.target.nextSibling.textContent,e.target.checked)
+
+      let selected_category = e.target.nextSibling.textContent
+  
+      let value = e.target.checked
+        
+      this.setState(prevState => ({
+          price_list : prevState.price_list.map(
+            el => el.label === selected_category ? {
+              ...el,
+              value : value
+            }
+            : 
+            el
+          ) 
+      }),() => {
+        // console.log(this.state.price_list)
+
+        let checkTruePrice = this.checkTruePrice()
+
+        this.setState({
+            checkTruePrice : checkTruePrice
+        },()=> {
+           this.combiningFilter()
+        })
+      })
+    }
+
+    checkTruePrice(){
+      let price_list = this.state.price_list
+          
+      let price_true_list = []
+
+      price_list.map((item,key) => (item.value) ? price_true_list.push(item) : '' )
+      
+      return price_true_list;
+    }
+
+
+
+    combiningFilter(){
+        let category = this.state.checkTrueCategory
+
+        let level = this.state.checkTrueLevel
+
+        let price = this.state.checkTruePrice
+
+        let combinedArray = []
+
+        combinedArray.push(...category,...level,...price)
+
+        console.log('combinedArray',combinedArray)
+
+        this.setFilterData(combinedArray)
+    }
+
+    setFilterData(data){
+        this.setState({
+            filtered_list : data
+        },() => {
+          this.showCourses()
+        })
+    }
+
+
+    showCourses(){
+
+      let filtered_item = this.state.filtered_list
+
+      let overall_course_list = this.state.courses
+
+      let course = []
+
+      for (let index = 0; index < filtered_item.length; index++) {
+          for(let i=0;i<overall_course_list.length;i++){
+              // if(filtered_item[index].label === 'All'){
+              //     course.push(overall_course_list[i])
+              // }
+              // else{
+              //   if(filtered_item[index].label === overall_course_list[i].dataCategory){
+              //     course.push(overall_course_list[i])
+              //   }
+              //   else if(filtered_item[index].label === overall_course_list[i].dataLevel){
+              //     course.push(overall_course_list[i])
+              //   }
+              // }   
+          }
+      }
+      // console.log('category_wise_course',category_wise_course)
+      this.setState({
+          FinalCourseList : course
+      })
+  }
+
     // PageLoadList(){
     //   let category_list = this.state.category_list
 
