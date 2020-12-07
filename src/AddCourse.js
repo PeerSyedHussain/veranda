@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 class AddCourse extends Component {
     constructor(props){
@@ -100,8 +101,26 @@ class AddCourse extends Component {
             setTotalLesson : '',
             setCourseName : '',
             setCourseDesc : '',
-            // setCourseImg : '',
-            // setProviderImg : ''
+            setCourseImg : '',
+            setProviderImg : '',
+            temp_obj : {
+                id : '',
+                dataCategory : '',
+                dataLevel : '',
+                dataPrice : "",
+                dataLanguage : "",
+                dataSort : "Popular",
+                className : "course-box",
+                firstChildClass : "course-img",
+                img_url:'',
+                courseName : '',
+                courseDesc : '',
+                courseProviderName : '',
+                courseTotalLesson : '',
+                courseAvailableLang : '',
+                courseProviderImg : '' ,
+                dataCourseAmt : '',
+            }
         }
     }
 
@@ -155,7 +174,7 @@ class AddCourse extends Component {
                 value.push(options[i].value);
             }
         }
-        // console.log('val',value)
+        // console.log('val',value.toString())
         this.setState({
             langValue : value
         })
@@ -191,22 +210,54 @@ class AddCourse extends Component {
 
     setCourseImg = (e) => {
         console.log(e.target.files[0])
-        let filename = e.target.files[0].name
-        // this.setState({
-        //     setCourseImg : filename
-        // })
+        let filename = URL.createObjectURL(e.target.files[0])
+        this.setState({
+            setCourseImg : filename
+        })
     }
 
     setProviderImg = (e) => {
         console.log(e.target.files[0])
-        let filename = e.target.files[0].name
-        // this.setState({
-        //     setProviderImg : filename
-        // })
+        let filename = URL.createObjectURL(e.target.files[0])
+        this.setState({
+            setProviderImg : filename
+        })
+    }
+
+    addCourse = (e) => {
+        e.preventDefault()
+
+        this.setState(prevState => ({
+            temp_obj: {                   // object that we want to update
+                ...prevState.temp_obj,    // keep all other key-value pairs
+                id : 11,
+                dataCategory : this.state.categoryValue,
+                dataLevel : this.state.levelValue,
+                dataPrice : this.state.priceValue,
+                dataLanguage : this.state.langValue.toString(),
+                dataSort : "Popular",
+                className : "course-box",
+                firstChildClass : "course-img",
+                img_url:this.state.setCourseImg,
+                courseName : this.state.setCourseName,
+                courseDesc : this.state.setCourseDesc,
+                courseProviderName : this.state.setUploaderName,
+                courseTotalLesson : this.state.setTotalLesson,
+                courseAvailableLang : this.state.langValue.toString(),
+                courseProviderImg :  this.state.setProviderImg,
+                dataCourseAmt : this.state.amount,       // update the value of specific key
+            }
+        }),()=> {
+            console.log(this.state.temp_obj)
+        })
+        // console.log(this.state.categoryValue,this.state.levelValue,this.state.priceValue,
+        //     this.state.amount,this.state.langValue,this.state.setUploaderName,this.state.setCourseDesc,
+        //     this.state.setCourseName,this.state.setTotalLesson)
+
     }
 
     render() {
-         const { category_option,level_option,price_option,setPrice,amount,setProviderImg,
+         const { category_option,level_option,price_option,setPrice,amount,setProviderImg,temp_obj,
                 languages_option,setUploaderName,setTotalLesson,setCourseName,setCourseDesc,setCourseImg } = this.state
         return (
             <>
@@ -217,7 +268,7 @@ class AddCourse extends Component {
                                 Add course
                             </div>
                             <div className='card-body'>
-                                <Form>
+                                <Form onSubmit={this.addCourse}>
                                     <Form.Group controlId="category">
                                         <Form.Label>Select Category</Form.Label>
                                         <Form.Control as="select" onChange={this.setCategory} value={ this.state.categoryValue }>
@@ -311,9 +362,11 @@ class AddCourse extends Component {
                                     </Form.Group>
 
 
-                                    <Button variant="primary" type="submit">
-                                        Submit
-                                    </Button>
+                                    <Link to='/' temp_obj = {{temp_obj}}>
+                                        <Button variant='primary' type='submit'>
+                                            Submit
+                                        </Button>
+                                    </Link>
                                 </Form>
                             </div>
                         </div>        

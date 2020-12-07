@@ -543,7 +543,7 @@ class App extends Component {
 
         combinedArray.push(...category,...level,...price,...lang)
 
-        console.log('combinedArray',combinedArray)
+        // console.log('combinedArray',combinedArray)
 
         this.setFilterData(combinedArray)
     }
@@ -588,7 +588,7 @@ class App extends Component {
           }
       }
 
-      console.log('category_wise_course',category_wise_course)
+      // console.log('category_wise_course',category_wise_course)
 
       for(let index = 0;index < filtered_item.length;index++){
         if(price_wise_course.length > 0){
@@ -615,7 +615,7 @@ class App extends Component {
           
       }
 
-      console.log('level_wise_course',level_wise_course)
+      // console.log('level_wise_course',level_wise_course)
 
       for(let index = 0;index < filtered_item.length;index++){
         if(level_wise_course.length > 0){
@@ -640,7 +640,7 @@ class App extends Component {
             }
         }  
       }
-      console.log('price_wise_course',price_wise_course)
+      // console.log('price_wise_course',price_wise_course)
 
       for(let index =0;index<filtered_item.length;index++){
           if(level_wise_course.length > 0){
@@ -679,7 +679,7 @@ class App extends Component {
           }
       }
 
-      console.log('language wise course',lang_wise_course)
+      // console.log('language wise course',lang_wise_course)
 
       if(lang_wise_course.length > 0){
           for(let i =0;i<lang_wise_course.length;i++){
@@ -692,7 +692,7 @@ class App extends Component {
           }
       }
 
-      console.log('removeDuplicates',removeDuplicates)
+      // console.log('removeDuplicates',removeDuplicates)
     
       this.setState({
           FinalCourseList : removeDuplicates.length > 0 ? removeDuplicates : price_wise_course.length > 0 ? price_wise_course : level_wise_course.length > 0 ? level_wise_course : category_wise_course
