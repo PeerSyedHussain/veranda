@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link,withRouter } from 'react-router-dom';
 
 class AddCourse extends Component {
     constructor(props){
@@ -248,7 +248,11 @@ class AddCourse extends Component {
                 dataCourseAmt : this.state.amount,       // update the value of specific key
             }
         }),()=> {
-            console.log(this.state.temp_obj)
+            // console.log(this.state.temp_obj)  
+            this.props.history.push({
+                pathname: '/',
+                state: this.state.temp_obj
+            });
         })
         // console.log(this.state.categoryValue,this.state.levelValue,this.state.priceValue,
         //     this.state.amount,this.state.langValue,this.state.setUploaderName,this.state.setCourseDesc,
@@ -257,8 +261,8 @@ class AddCourse extends Component {
     }
 
     render() {
-         const { category_option,level_option,price_option,setPrice,amount,setProviderImg,temp_obj,
-                languages_option,setUploaderName,setTotalLesson,setCourseName,setCourseDesc,setCourseImg } = this.state
+         const { category_option,level_option,price_option,setPrice,amount,temp_obj,
+                languages_option,setUploaderName,setTotalLesson,setCourseName,setCourseDesc } = this.state
         return (
             <>
                <section className='row my-4 justify-content-center align-items-center'>
@@ -362,11 +366,9 @@ class AddCourse extends Component {
                                     </Form.Group>
 
 
-                                    <Link to='/' temp_obj = {{temp_obj}}>
-                                        <Button variant='primary' type='submit'>
-                                            Submit
-                                        </Button>
-                                    </Link>
+                                    <Button variant='primary' type='submit'>
+                                        Submit
+                                    </Button>
                                 </Form>
                             </div>
                         </div>        
@@ -377,4 +379,4 @@ class AddCourse extends Component {
     }
 }
 
-export default AddCourse;
+export default withRouter(AddCourse);

@@ -318,6 +318,9 @@ class App extends Component {
     }
 
     componentDidMount(){
+
+        
+
         let checkTrueCategory = this.checkTrueCategory()
         // console.log('checkTrueCategory',checkTrueCategory)
         this.setState({
@@ -325,6 +328,12 @@ class App extends Component {
         },()=> {
             this.combiningFilter()
         })
+        console.log('addedCourse',this.props.location.state)
+        let added_course = this.props.location.state
+        if(added_course.courseName !== ''){
+            this.state.courses.push(added_course)
+        }
+        
     }
 
     categoryFilter = (e) => {
