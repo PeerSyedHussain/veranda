@@ -10,7 +10,9 @@ import Accountant from './assets/img/accountant.jpg'
 import GST from './assets/img/gst.jpg'
 import MarketTrend from './assets/img/market-trend.jpg'
 import Provider1 from './assets/img/provider1.jpg'
-
+import { BrowserRouter as Router,Switch,Route,Link } from "react-router-dom";
+import AddCourse from './AddCourse';
+// import AddCourse from './AddCourse';
 class App extends Component {
     constructor(props){
       super(props);
@@ -22,7 +24,7 @@ class App extends Component {
                 dataCategory : "IBPS Exams",
                 dataLevel : "Beginner",
                 dataPrice : "Free",
-                dataLanguage : "Tamil",
+                dataLanguage : "English,Tamil,Hindi",
                 dataSort : "Popular",
                 className : "course-box",
                 firstChildClass : "course-img",
@@ -40,7 +42,7 @@ class App extends Component {
               dataCategory : "Finance Services",
               dataLevel : "Intermediate",
               dataPrice : "Paid",
-              dataLanguage : "Tamil",
+              dataLanguage : "English,Tamil,Hindi",
               dataSort : "Popular",
               className : "course-box",
               firstChildClass : "course-img",
@@ -58,7 +60,7 @@ class App extends Component {
               dataCategory : "Finance Markets",
               dataLevel : "Expert",
               dataPrice : "Free",
-              dataLanguage : "Malayalam",
+              dataLanguage : "English,Tamil,Hindi,Malayalam",
               dataSort : "Popular",
               className : "course-box",
               firstChildClass : "course-img",
@@ -67,7 +69,7 @@ class App extends Component {
               courseDesc : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
               courseProviderName : 'David Warner',
               courseTotalLesson : 25,
-              courseAvailableLang : 'English,Tamil,Hindi',
+              courseAvailableLang : 'English,Tamil,Hindi,Malayalam',
               courseProviderImg :  Provider1,
               dataCourseAmt : 5500,
             },
@@ -76,7 +78,7 @@ class App extends Component {
               dataCategory : "Economics",
               dataLevel : "Expert",
               dataPrice : "Paid",
-              dataLanguage : "English",
+              dataLanguage : "English,Tamil,Telugu",
               dataSort : "Popular",
               className : "course-box",
               firstChildClass : "course-img",
@@ -85,7 +87,7 @@ class App extends Component {
               courseDesc : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
               courseProviderName : 'David Warner',
               courseTotalLesson : 25,
-              courseAvailableLang : 'English,Tamil,Hindi',
+              courseAvailableLang : 'English,Tamil,Telugu',
               courseProviderImg :  Provider1,
               dataCourseAmt : 5500,
             },
@@ -94,7 +96,7 @@ class App extends Component {
               dataCategory : "Statistics",
               dataLevel : "Expert",
               dataPrice : "Paid",
-              dataLanguage : "Telugu",
+              dataLanguage : "English",
               dataSort : "Popular",
               className : "course-box",
               firstChildClass : "course-img",
@@ -103,7 +105,7 @@ class App extends Component {
               courseDesc : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
               courseProviderName : 'David Warner',
               courseTotalLesson : 25,
-              courseAvailableLang : 'English,Tamil,Hindi',
+              courseAvailableLang : 'English',
               courseProviderImg :  Provider1,
               dataCourseAmt : 5500,
             },
@@ -121,7 +123,7 @@ class App extends Component {
               courseDesc : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
               courseProviderName : 'David Warner',
               courseTotalLesson : 25,
-              courseAvailableLang : 'English,Tamil,Hindi',
+              courseAvailableLang : 'Hindi',
               courseProviderImg :  Provider1,
               dataCourseAmt : 5500,
             },
@@ -139,7 +141,7 @@ class App extends Component {
               courseDesc : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
               courseProviderName : 'David Warner',
               courseTotalLesson : 25,
-              courseAvailableLang : 'English,Tamil,Hindi',
+              courseAvailableLang : 'Tamil',
               courseProviderImg :  Provider1,
               dataCourseAmt : 5500,
             },
@@ -148,7 +150,7 @@ class App extends Component {
               dataCategory : "GST",
               dataLevel : "Expert",
               dataPrice : "Paid",
-              dataLanguage : "Tamil",
+              dataLanguage : "Tamil,Malayalam",
               dataSort : "Popular",
               className : "course-box",
               firstChildClass : "course-img",
@@ -157,7 +159,7 @@ class App extends Component {
               courseDesc : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
               courseProviderName : 'David Warner',
               courseTotalLesson : 25,
-              courseAvailableLang : 'English,Tamil,Hindi',
+              courseAvailableLang : 'Tamil,Malayalam',
               courseProviderImg :  Provider1,
               dataCourseAmt : 5500,
             },
@@ -166,7 +168,7 @@ class App extends Component {
               dataCategory : "Market Trend",
               dataLevel : "Expert",
               dataPrice : "Free",
-              dataLanguage : "Tamil",
+              dataLanguage : "Tamil,Telugu",
               dataSort : "Popular",
               className : "course-box",
               firstChildClass : "course-img",
@@ -175,7 +177,7 @@ class App extends Component {
               courseDesc : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
               courseProviderName : 'David Warner',
               courseTotalLesson : 25,
-              courseAvailableLang : 'English,Tamil,Hindi',
+              courseAvailableLang : 'Tamil,Telugu',
               courseProviderImg :  Provider1,
               dataCourseAmt : 5500,
             },
@@ -184,7 +186,7 @@ class App extends Component {
               dataCategory : "IBPS Exams",
               dataLevel : "Intermediate",
               dataPrice : "Paid",
-              dataLanguage : "Tamil",
+              dataLanguage : "Tamil,English",
               dataSort : "Popular",
               className : "course-box",
               firstChildClass : "course-img",
@@ -193,7 +195,7 @@ class App extends Component {
               courseDesc : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
               courseProviderName : 'David Warner',
               courseTotalLesson : 20,
-              courseAvailableLang : 'English,Tamil,Hindi',
+              courseAvailableLang : 'English,Tamil',
               courseProviderImg :  Provider1,
               dataCourseAmt : 7500,
           },
@@ -311,7 +313,8 @@ class App extends Component {
           filtered_list : [],
           checkTrueCategory : [],
           checkTrueLevel : [],
-          checkTruePrice : []
+          checkTruePrice : [],
+          checkTrueLang : []
         }
     }
 
@@ -489,6 +492,44 @@ class App extends Component {
     }
 
 
+    languageFilter = (e) => {
+        console.log(e.target.nextSibling.textContent,e.target.checked)
+
+        let selected_category = e.target.nextSibling.textContent
+
+        let value = e.target.checked
+        
+        this.setState(prevState => ({
+            language_list : prevState.language_list.map(
+              el => el.label === selected_category ? {
+                ...el,
+                value : value
+              }
+              : 
+              el
+            ) 
+        }),() => {
+          // console.log(this.state.language_list)
+
+          let checkTrueLang = this.checkTrueLang()
+
+          this.setState({
+              checkTrueLang : checkTrueLang
+          },()=> {
+            this.combiningFilter()
+          })
+        })
+    }
+
+    checkTrueLang(){
+        let language_list = this.state.language_list
+            
+        let lang_true_list = []
+
+        language_list.map((item,key) => (item.value) ? lang_true_list.push(item) : '' )
+        
+        return lang_true_list;
+    }
 
     combiningFilter(){
         let category = this.state.checkTrueCategory
@@ -497,9 +538,11 @@ class App extends Component {
 
         let price = this.state.checkTruePrice
 
+        let lang = this.state.checkTrueLang
+
         let combinedArray = []
 
-        combinedArray.push(...category,...level,...price)
+        combinedArray.push(...category,...level,...price,...lang)
 
         console.log('combinedArray',combinedArray)
 
@@ -527,6 +570,12 @@ class App extends Component {
 
       let price_wise_course = []
 
+      let lang_wise_course = []
+
+      let removeDuplicates = []
+
+      let temp_obj = {}
+
       for (let index = 0; index < filtered_item.length; index++) {
           for(let i=0;i<overall_course_list.length;i++){
               if(filtered_item[index].label === 'All'){
@@ -541,6 +590,7 @@ class App extends Component {
       }
 
       console.log('category_wise_course',category_wise_course)
+
       for(let index = 0;index < filtered_item.length;index++){
           for(let i =0;i<category_wise_course.length;i++){
               if(filtered_item[index].label === category_wise_course[i].dataLevel){
@@ -565,213 +615,241 @@ class App extends Component {
                     price_wise_course.push(category_wise_course[i])
                 }
             }
-        }
-         
+        }  
       }
-
       console.log('price_wise_course',price_wise_course)
 
+      for(let index =0;index<filtered_item.length;index++){
+          if(level_wise_course.length > 0){
+              if(price_wise_course.length > 0){
+                  for(let i=0;i<price_wise_course.length ;i++){
+                    var str = price_wise_course[i].dataLanguage
+                    if(str.indexOf(filtered_item[index].label) !== -1){
+                        lang_wise_course.push(price_wise_course[i])
+                    } 
+                  }
+              }
+              else{
+                for(let i=0;i<level_wise_course.length ;i++){
+                    var str1 = level_wise_course[i].dataLanguage
+                    if(str1.indexOf(filtered_item[index].label) !== -1){
+                      lang_wise_course.push(level_wise_course[i])
+                    } 
+                }
+              }
+          }
+          else{
+            for(let i=0;i<category_wise_course.length ;i++){
+                var str2 = category_wise_course[i].dataLanguage
+                if(str2.indexOf(filtered_item[index].label) !== -1){
+                  lang_wise_course.push(category_wise_course[i])
+                } 
+            }
+          }
+      }
+
+      console.log('language wise course',lang_wise_course)
+
+      if(lang_wise_course.length > 0){
+          for(let i =0;i<lang_wise_course.length;i++){
+              let objTitle = lang_wise_course[i].id
+              temp_obj[objTitle] = lang_wise_course[i]
+          }
+          // console.log(temp_obj)
+          for(let item in temp_obj){
+              removeDuplicates.push(temp_obj[item])
+          }
+      }
+
+      console.log('removeDuplicates',removeDuplicates)
+    
       this.setState({
-          FinalCourseList : level_wise_course.length <= 0 ? category_wise_course : price_wise_course.length <= 0 ? level_wise_course : price_wise_course  
+          // FinalCourseList : level_wise_course.length <= 0 ? category_wise_course : price_wise_course.length <= 0 ? level_wise_course : price_wise_course  
+          FinalCourseList : level_wise_course.length > 0 ? level_wise_course : price_wise_course.length > 0 ? price_wise_course : removeDuplicates.length > 0 ? removeDuplicates : category_wise_course
       })
   }
-
-   
-
-    // languageFilter = (e) => {
-    //   console.log(e.target.nextSibling.textContent,e.target.checked)
-
-    //   let selected_category = e.target.nextSibling.textContent
-
-    //   let value = e.target.checked
-      
-    //   this.setState(prevState => ({
-    //       language_list : prevState.language_list.map(
-    //         el => el.label === selected_category ? {
-    //           ...el,
-    //           value : value
-    //         }
-    //         : 
-    //         el
-    //       ) 
-    //   }),() => {
-    //     console.log(this.state.language_list)
-    //     this.pageAfterClickLanguageFilter()
-    //   })
-    // }
-
 
 
     render() {
         const { FinalCourseList,category_list,level_list,price_list,language_list } = this.state;
         return (
           <>
-            <section className='row my-4'>
-                <div className='col-md-3'>
-                    <div>
-                        <h5 className='filter-heading'>
-                          Category
-                          <span className='bottom-line'>
-                            <span className='bottom-green-line'></span>
-                          </span>
-                        </h5>
-                        <ul className='p-0'>
+            <Router>
+              <section className='row my-4'>
+                  <div className='col-md-3'>
+                      <div>
+                          <h5 className='filter-heading'>
+                            Category
+                            <span className='bottom-line'>
+                              <span className='bottom-green-line'></span>
+                            </span>
+                          </h5>
+                          <ul className='p-0'>
+                              {
+                                category_list.map((item,key) => {
+                                    return (
+                                        <>
+                                            <li id={key}>
+                                                <Form.Group controlId={item.id}>
+                                                  <Form.Check id={item.id} type='checkbox' label={item.label}
+                                                      checked={(item.value === true) ? true : false }
+                                                    onChange={this.categoryFilter}
+                                                  />
+                                                </Form.Group>
+                                            </li>
+                                        </>
+                                    );
+                                })
+                              }
+                          </ul>
+                      </div>
+                      <div>
+                          <h5 className='filter-heading'>
+                            Level
+                            <span className='bottom-line'>
+                              <span className='bottom-green-line'></span>
+                            </span>
+                          </h5>
+                          <ul className='p-0'>
                             {
-                              category_list.map((item,key) => {
-                                  return (
-                                      <>
-                                          <li id={key}>
-                                              <Form.Group controlId={item.id}>
-                                                <Form.Check id={item.id} type='checkbox' label={item.label}
-                                                    checked={(item.value === true) ? true : false }
-                                                   onChange={this.categoryFilter}
-                                                />
-                                              </Form.Group>
-                                          </li>
-                                      </>
-                                  );
-                              })
-                            }
-                        </ul>
-                    </div>
-                    <div>
-                        <h5 className='filter-heading'>
-                          Level
-                          <span className='bottom-line'>
-                            <span className='bottom-green-line'></span>
-                          </span>
-                        </h5>
-                        <ul className='p-0'>
-                          {
-                              level_list.map((item,key) => {
-                                  return (
-                                      <>
-                                          <li id={key}>
-                                              <Form.Group controlId={item.id}>
-                                                <Form.Check id={item.id} type='checkbox' label={item.label}
-                                                    checked={(item.value === true) ? true : false }
-                                                   onChange={this.levelFilter}
-                                                />
-                                              </Form.Group>
-                                          </li>
-                                      </>
-                                  );
-                              })
-                            }
-                           
-                        </ul>
-                    </div>
-                    <div>
-                        <h5 className='filter-heading'>
-                          Price
-                          <span className='bottom-line'>
-                            <span className='bottom-green-line'></span>
-                          </span>
-                        </h5>
-                        <ul className='p-0'>
-                            {
-                              price_list.map((item,key) => {
-                                  return (
-                                      <>
-                                          <li id={key}>
-                                              <Form.Group controlId={item.id}>
-                                                <Form.Check id={item.id} type='checkbox' label={item.label}
-                                                    checked={(item.value === true) ? true : false }
-                                                   onChange={this.priceFilter}
-                                                />
-                                              </Form.Group>
-                                          </li>
-                                      </>
-                                  );
-                              })
-                            }
-                        </ul>
-                    </div>
-                    <div>
-                        <h5 className='filter-heading'>
-                          Language
-                          <span className='bottom-line'>
-                            <span className='bottom-green-line'></span>
-                          </span>
-                        </h5>
-                        <ul className='p-0'>
-                            {
-                              language_list.map((item,key) => {
-                                  return (
-                                      <>
-                                          <li id={key}>
-                                              <Form.Group controlId={item.id}>
-                                                <Form.Check id={item.id} type='checkbox' label={item.label}
-                                                    checked={(item.value === true) ? true : false }
-                                                   onChange={this.languageFilter}
-                                                />
-                                              </Form.Group>
-                                          </li>
-                                      </>
-                                  );
-                              })
-                            }
-                        </ul>
-                    </div>
-                </div>
-                <div className='col-md-9'>
-                  <Button variant='outline-primary'>
-                      Add Course
-                  </Button>
-                  <ul className='p-0 d-flex flex-wrap'>
-                      {
-                          FinalCourseList.map((item,key) => {
-                            return (
-                                <>
-                                    <li id={key} data-id={item.id} data-category={item.dataCategory} 
-                                        data-sort={item.dataSort} data-level = {item.dataLevel} data-price = {item.dataPrice}
-                                        data-language = {item.dataLanguage}
-                                        className={item.className}>
-                                        <div className={item.firstChildClass}>
-                                            <img src={item.img_url} alt="pic" className='shadow-sm w-100'/>
-                                            <div className='price-bg'>
-                                                <p className='mb-0'>{(item.dataPrice === 'Free') ?  'Free' : `Rs ${item.dataCourseAmt}`  }</p>
-                                            </div>
-                                        </div>
-                                        <div className='course-tot-info'>
-                                            <div className='provider-info'>
-                                                <div className='provider-img'>
-                                                  <img src={item.courseProviderImg} alt="pic" className='shadow-sm w-100'/>
-                                                </div>
-                                                <div className='ml-3'>
-                                                    <p className='mb-0'>{item.courseProviderName}</p>
+                                level_list.map((item,key) => {
+                                    return (
+                                        <>
+                                            <li id={key}>
+                                                <Form.Group controlId={item.id}>
+                                                  <Form.Check id={item.id} type='checkbox' label={item.label}
+                                                      checked={(item.value === true) ? true : false }
+                                                    onChange={this.levelFilter}
+                                                  />
+                                                </Form.Group>
+                                            </li>
+                                        </>
+                                    );
+                                })
+                              }
+                            
+                          </ul>
+                      </div>
+                      <div>
+                          <h5 className='filter-heading'>
+                            Price
+                            <span className='bottom-line'>
+                              <span className='bottom-green-line'></span>
+                            </span>
+                          </h5>
+                          <ul className='p-0'>
+                              {
+                                price_list.map((item,key) => {
+                                    return (
+                                        <>
+                                            <li id={key}>
+                                                <Form.Group controlId={item.id}>
+                                                  <Form.Check id={item.id} type='checkbox' label={item.label}
+                                                      checked={(item.value === true) ? true : false }
+                                                    onChange={this.priceFilter}
+                                                  />
+                                                </Form.Group>
+                                            </li>
+                                        </>
+                                    );
+                                })
+                              }
+                          </ul>
+                      </div>
+                      <div>
+                          <h5 className='filter-heading'>
+                            Language
+                            <span className='bottom-line'>
+                              <span className='bottom-green-line'></span>
+                            </span>
+                          </h5>
+                          <ul className='p-0'>
+                              {
+                                language_list.map((item,key) => {
+                                    return (
+                                        <>
+                                            <li id={key}>
+                                                <Form.Group controlId={item.id}>
+                                                  <Form.Check id={item.id} type='checkbox' label={item.label}
+                                                      checked={(item.value === true) ? true : false }
+                                                    onChange={this.languageFilter}
+                                                  />
+                                                </Form.Group>
+                                            </li>
+                                        </>
+                                    );
+                                })
+                              }
+                          </ul>
+                      </div>
+                  </div>
+                  <div className='col-md-9'>
+                  
+                    <Link className='outline-primary btn btn-primary' to='/add-course'>
+                          Add Course
+                    </Link>
+                  
+                    
+                    <ul className='p-0 d-flex flex-wrap'>
+                        {
+                            FinalCourseList.map((item,key) => {
+                              return (
+                                  <>
+                                      <li id={key} data-id={item.id} data-category={item.dataCategory} 
+                                          data-sort={item.dataSort} data-level = {item.dataLevel} data-price = {item.dataPrice}
+                                          data-language = {item.dataLanguage}
+                                          className={item.className}>
+                                          <div className={item.firstChildClass}>
+                                              <img src={item.img_url} alt="pic" className='shadow-sm w-100'/>
+                                              <div className='price-bg'>
+                                                  <p className='mb-0'>{(item.dataPrice === 'Free') ?  'Free' : `Rs ${item.dataCourseAmt}`  }</p>
+                                              </div>
+                                          </div>
+                                          <div className='course-tot-info'>
+                                              <div className='provider-info'>
+                                                  <div className='provider-img'>
+                                                    <img src={item.courseProviderImg} alt="pic" className='shadow-sm w-100'/>
+                                                  </div>
+                                                  <div className='ml-3'>
+                                                      <p className='mb-0'>{item.courseProviderName}</p>
 
-                                                    <div>
-                                                      <p className='mb-0 d-flex'>
-                                                        {item.courseTotalLesson} Lessons 
-                                                          <span className='separator mx-2'></span>
-                                                        {item.courseAvailableLang}
-                                                      </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <h3 className='course-name'>{item.courseName}</h3>
-                                            <p className='course-desc mb-0'>
-                                              {item.courseDesc}
-                                            </p>
-                                            <div className='btn-sec my-3'>
-                                              <Button variant="success">
-                                                  Purchase Now
-                                              </Button>
-                                              <Button variant="outline-success">
-                                                  Get Information
-                                              </Button>
-                                            </div>
-                                        </div>
-                                        
-                                    </li>
-                                </>
-                            );
-                          })
-                      }
-                    </ul>
-                </div>
-            </section>   
+                                                      <div>
+                                                        <p className='mb-0 d-flex flex-wrap'>
+                                                          {item.courseTotalLesson} Lessons 
+                                                            <span className='separator mx-2'></span>
+                                                          {item.courseAvailableLang}
+                                                        </p>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <h3 className='course-name'>{item.courseName}</h3>
+                                              <p className='course-desc mb-0'>
+                                                {item.courseDesc}
+                                              </p>
+                                              <div className='btn-sec my-3'>
+                                                <Button variant="success">
+                                                    Purchase Now
+                                                </Button>
+                                                <Button variant="outline-success">
+                                                    Get Information
+                                                </Button>
+                                              </div>
+                                          </div>
+                                          
+                                      </li>
+                                  </>
+                              );
+                            })
+                        }
+                      </ul>
+                  </div>
+              </section>   
+              <Switch>
+                  <Route path='/add-course'>
+                      <AddCourse />
+                  </Route>
+              </Switch>
+            </Router>
           </>
           
         );
