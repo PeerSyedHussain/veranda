@@ -638,6 +638,14 @@ class App extends Component {
                 }
               }
           }
+          else if(price_wise_course.length > 0){
+            for(let i=0;i<price_wise_course.length ;i++){
+              var str3 = price_wise_course[i].dataLanguage
+              if(str3.indexOf(filtered_item[index].label) !== -1){
+                  lang_wise_course.push(price_wise_course[i])
+              } 
+            }
+          }
           else{
             for(let i=0;i<category_wise_course.length ;i++){
                 var str2 = category_wise_course[i].dataLanguage
@@ -665,7 +673,8 @@ class App extends Component {
     
       this.setState({
           // FinalCourseList : level_wise_course.length <= 0 ? category_wise_course : price_wise_course.length <= 0 ? level_wise_course : price_wise_course  
-          FinalCourseList : level_wise_course.length > 0 ? level_wise_course : price_wise_course.length > 0 ? price_wise_course : removeDuplicates.length > 0 ? removeDuplicates : category_wise_course
+          // FinalCourseList : level_wise_course.length > 0 ? level_wise_course : price_wise_course.length > 0 ? price_wise_course : removeDuplicates.length > 0 ? removeDuplicates : category_wise_course
+          FinalCourseList : removeDuplicates.length > 0 ? removeDuplicates : price_wise_course.length > 0 ? price_wise_course : level_wise_course.length > 0 ? level_wise_course : category_wise_course
       })
   }
 
