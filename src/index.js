@@ -3,10 +3,18 @@ import ReactDOM from 'react-dom';
 import './assets/scss/index.scss'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter as Router,Switch,Route} from "react-router-dom";
+import AddCourse from './AddCourse';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Switch>  
+          <Route exact path='/' component={App}/> 
+      
+          <Route path='/add-course' component={AddCourse}/>
+      </Switch>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

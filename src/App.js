@@ -10,8 +10,7 @@ import Accountant from './assets/img/accountant.jpg'
 import GST from './assets/img/gst.jpg'
 import MarketTrend from './assets/img/market-trend.jpg'
 import Provider1 from './assets/img/provider1.jpg'
-import { BrowserRouter as Router,Switch,Route,Link } from "react-router-dom";
-import AddCourse from './AddCourse';
+import { Link } from "react-router-dom";
 // import AddCourse from './AddCourse';
 class App extends Component {
     constructor(props){
@@ -592,11 +591,28 @@ class App extends Component {
       console.log('category_wise_course',category_wise_course)
 
       for(let index = 0;index < filtered_item.length;index++){
-          for(let i =0;i<category_wise_course.length;i++){
-              if(filtered_item[index].label === category_wise_course[i].dataLevel){
-                  level_wise_course.push(category_wise_course[i])
-              }
-          }
+        if(price_wise_course.length > 0){
+            for(let i =0;i<price_wise_course.length;i++){
+                if(filtered_item[index].label === price_wise_course[i].dataLevel){
+                    level_wise_course.push(price_wise_course[i])
+                }
+            }
+        }
+        else if(removeDuplicates.length > 0){
+            for(let i =0; i<removeDuplicates.length;i++){
+                if(filtered_item[index].label === removeDuplicates[i].dataLevel){
+                    level_wise_course.push(removeDuplicates[i])
+                }
+            }
+        }
+        else{
+            for(let i =0;i<category_wise_course.length;i++){
+                if(filtered_item[index].label === category_wise_course[i].dataLevel){
+                    level_wise_course.push(category_wise_course[i])
+                }
+            }
+        }
+          
       }
 
       console.log('level_wise_course',level_wise_course)
@@ -608,6 +624,13 @@ class App extends Component {
                     price_wise_course.push(level_wise_course[i])
                 }
             }
+        }
+        else if(removeDuplicates.length > 0){
+          for(let i =0; i<removeDuplicates.length;i++){
+              if(filtered_item[index].label === removeDuplicates[i].dataPrice){
+                  price_wise_course.push(removeDuplicates[i])
+              }
+          }
         }
         else{
             for(let i =0; i<category_wise_course.length;i++){
@@ -672,8 +695,6 @@ class App extends Component {
       console.log('removeDuplicates',removeDuplicates)
     
       this.setState({
-          // FinalCourseList : level_wise_course.length <= 0 ? category_wise_course : price_wise_course.length <= 0 ? level_wise_course : price_wise_course  
-          // FinalCourseList : level_wise_course.length > 0 ? level_wise_course : price_wise_course.length > 0 ? price_wise_course : removeDuplicates.length > 0 ? removeDuplicates : category_wise_course
           FinalCourseList : removeDuplicates.length > 0 ? removeDuplicates : price_wise_course.length > 0 ? price_wise_course : level_wise_course.length > 0 ? level_wise_course : category_wise_course
       })
   }
@@ -683,7 +704,6 @@ class App extends Component {
         const { FinalCourseList,category_list,level_list,price_list,language_list } = this.state;
         return (
           <>
-            <Router>
               <section className='row my-4'>
                   <div className='col-md-3'>
                       <div>
@@ -853,12 +873,7 @@ class App extends Component {
                       </ul>
                   </div>
               </section>   
-              <Switch>
-                  <Route path='/add-course'>
-                      <AddCourse />
-                  </Route>
-              </Switch>
-            </Router>
+              
           </>
           
         );
