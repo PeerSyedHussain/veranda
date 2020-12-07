@@ -326,7 +326,7 @@ class App extends Component {
     }
 
     categoryFilter = (e) => {
-      console.log(e.target.nextSibling.textContent,e.target.checked)
+      // console.log(e.target.nextSibling.textContent,e.target.checked)
 
       let selected_category = e.target.nextSibling.textContent
 
@@ -354,11 +354,11 @@ class App extends Component {
                 ) ,
                 filtered_list : []
             }),() => {
-              console.log(this.state.category_list)
+              // console.log(this.state.category_list)
 
               let checkTrueCategory = this.checkTrueCategory()
 
-              console.log('checkTrueCategory',checkTrueCategory)
+              // console.log('checkTrueCategory',checkTrueCategory)
 
               this.setState({
                   checkTrueCategory : checkTrueCategory
@@ -378,11 +378,11 @@ class App extends Component {
                   el
                 ) ,
             }),() => {
-              console.log(this.state.category_list)
+              // console.log(this.state.category_list)
 
               let checkTrueCategory = this.checkTrueCategory()
               
-              console.log('checkTrueCategory',checkTrueCategory)
+              // console.log('checkTrueCategory',checkTrueCategory)
 
               this.setState({
                 checkTrueCategory : checkTrueCategory
@@ -406,7 +406,7 @@ class App extends Component {
 
 
     levelFilter = (e) => {
-      console.log(e.target.nextSibling.textContent,e.target.checked)
+      // console.log(e.target.nextSibling.textContent,e.target.checked)
 
       let selected_category = e.target.nextSibling.textContent
 
@@ -425,7 +425,7 @@ class App extends Component {
         // console.log(this.state.level_list)
         let checkTrueLevel = this.checkTrueLevel()
         
-        console.log('checkTrueLevel',checkTrueLevel)
+        // console.log('checkTrueLevel',checkTrueLevel)
 
         this.setState({
             checkTrueLevel : checkTrueLevel
@@ -450,7 +450,7 @@ class App extends Component {
     
 
     priceFilter = (e) => {
-      console.log(e.target.nextSibling.textContent,e.target.checked)
+      // console.log(e.target.nextSibling.textContent,e.target.checked)
 
       let selected_category = e.target.nextSibling.textContent
   
@@ -552,11 +552,21 @@ class App extends Component {
       console.log('level_wise_course',level_wise_course)
 
       for(let index = 0;index < filtered_item.length;index++){
-          for(let i =0;i<level_wise_course.length;i++){
-              if(filtered_item[index].label === level_wise_course[i].dataPrice){
-                  price_wise_course.push(level_wise_course[i])
-              }
-          }
+        if(level_wise_course.length > 0){
+            for(let i =0; i<level_wise_course.length;i++){
+                if(filtered_item[index].label === level_wise_course[i].dataPrice){
+                    price_wise_course.push(level_wise_course[i])
+                }
+            }
+        }
+        else{
+            for(let i =0; i<category_wise_course.length;i++){
+                if(filtered_item[index].label === category_wise_course[i].dataPrice){
+                    price_wise_course.push(category_wise_course[i])
+                }
+            }
+        }
+         
       }
 
       console.log('price_wise_course',price_wise_course)
@@ -705,6 +715,9 @@ class App extends Component {
                     </div>
                 </div>
                 <div className='col-md-9'>
+                  <Button variant='outline-primary'>
+                      Add Course
+                  </Button>
                   <ul className='p-0 d-flex flex-wrap'>
                       {
                           FinalCourseList.map((item,key) => {
